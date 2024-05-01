@@ -8,7 +8,7 @@ import SignInCard from "@/components/SignInCard";
 
 const page = () => {
   return (
-    <div className="lg:mr-20  w-screen h-screen rounded-md  bg-neutral-950 relative flex flex-col items-center justify-center antialiased">
+    <div className="lg:mr-20  w-screen h-screen bg-neutral-950 relative flex flex-col items-center justify-center antialiased">
       <SignInCard />
       <BackgroundBeams />
     </div>

@@ -14,15 +14,19 @@ import {
 import { Menu, User, LogIn, LogOut } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useUserDataStore } from "@/utils/store";
+import { Button } from "./ui/button";
 
 const NavBar = () => {
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(true);
   const routeName = usePathname();
   const router = useRouter();
-  console.log(routeName);
+  // console.log(routeName);
   const user = useUserDataStore((state) => state.user);
   const setUser = useUserDataStore((state) => state.setUser);
-  console.log(user);
+  var isAdmin = false;
+  if (user) {
+    isAdmin = user.isAdmin;
+  }
 
   return (
     routeName != "/login" &&
@@ -44,25 +48,62 @@ const NavBar = () => {
             </div>
           </div>
 
-          {user && (
-            <div className="flex justify-center align-middle gap-4 p-2.5 lg:gap-10 max-lg:text-sm font-semibold max-md:hidden">
-              <div className="hover:cursor-pointer">Withdraw</div>
-              <div className="hover:cursor-pointer">Deposit</div>
-              <div className="hover:cursor-pointer">Transfer</div>
-              <div
-                className="hover:cursor-pointer"
-                onClick={() => router.push("/transactions")}
-              >
-                Transaction
+          {user ? (
+            isAdmin ? (
+              <div>
+                <div className="flex gap-2 hidden md:hidden sm:hidden lg:block">
+                  <Button variant="link" onClick={() => router.push("/admin")}>
+                    Dashboard
+                  </Button>
+                  <Button
+                    variant="link"
+                    onClick={() => router.push("/admin/users")}
+                  >
+                    Users
+                  </Button>
+                  <Button
+                    variant="link"
+                    onClick={() => router.push("/admin/transactions")}
+                  >
+                    Transactions
+                  </Button>
+                  <Button
+                    variant="link"
+                    onClick={() => router.push("/admin/create-requests")}
+                  >
+                    Create Requests
+                  </Button>
+                  <Button
+                    variant="link"
+                    onClick={() => router.push("/admin/delete-requests")}
+                  >
+                    Delete Requests
+                  </Button>
+                </div>
+                <div className="lg:hidden"></div>
               </div>
-            </div>
-          )}
+            ) : (
+              <div className="flex justify-center align-middle gap-4 p-2.5 lg:gap-10 max-lg:text-sm font-semibold max-md:hidden">
+                <div className="hover:cursor-pointer">Withdraw</div>
+                <div className="hover:cursor-pointer">Deposit</div>
+                <div className="hover:cursor-pointer">Transfer</div>
+                <div
+                  className="hover:cursor-pointer"
+                  onClick={() => router.push("/transactions")}
+                >
+                  Transaction
+                </div>
+              </div>
+            )
+          ) : null}
         </div>
         {user ? (
-          <div className="max-md:hidden flex gap-8 max-lg:text-sm">
-            <div className="hover:cursor-pointer font-semibold mt-2.5">
-              Profile
-            </div>
+          <div className="hidden sm:hidden md:hidden lg:block flex gap-8 max-lg:text-sm">
+            {!isAdmin && (
+              <div className="hover:cursor-pointer font-semibold mt-2.5">
+                Profile
+              </div>
+            )}
             <div>
               <div
                 className="font-semibold rounded-xl  border-gray-900 border mt-1.5 px-3 py-1 hover:cursor-pointer"
@@ -85,57 +126,127 @@ const NavBar = () => {
             </div>
           </div>
         )}
-        <div className="md:hidden ">
+        <div className="lg:hidden">
           <DropdownMenu>
             <DropdownMenuTrigger className="focus:outline-none focus:border-none mt-2.5">
               <Menu className="cursor-pointer" />
             </DropdownMenuTrigger>
             {user ? (
-              <DropdownMenuContent sideOffset={4}>
-                <DropdownMenuItem>
-                  <DropdownMenuLabel className="cursor-pointer">
-                    Profile
-                  </DropdownMenuLabel>
-                  <DropdownMenuShortcut>
-                    <User className="stroke-black" />
-                  </DropdownMenuShortcut>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <DropdownMenuLabel className="cursor-pointer">
-                    WithDraw
-                  </DropdownMenuLabel>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <DropdownMenuLabel className="cursor-pointer">
-                    Deposit
-                  </DropdownMenuLabel>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <DropdownMenuLabel className="cursor-pointer">
-                    Transfer
-                  </DropdownMenuLabel>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <DropdownMenuLabel className="cursor-pointer">
-                    Transaction
-                  </DropdownMenuLabel>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator className="bg-gray-400 w-[90%]" />
-                <DropdownMenuItem>
-                  <DropdownMenuLabel
-                    className="cursor-pointer"
-                    onClick={() => {
-                      setUser(null);
-                      router.push("/");
-                    }}
-                  >
-                    Logout
-                  </DropdownMenuLabel>
-                  <DropdownMenuShortcut>
-                    <LogOut className="stroke-black" />
-                  </DropdownMenuShortcut>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
+              isAdmin ? (
+                <DropdownMenuContent sideOffset={4}>
+                  <DropdownMenuItem>
+                    <DropdownMenuLabel
+                      className="cursor-pointer"
+                      onClick={() => {
+                        router.push("/admin");
+                      }}
+                    >
+                      Dashboard
+                    </DropdownMenuLabel>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <DropdownMenuLabel
+                      className="cursor-pointer"
+                      onClick={() => {
+                        router.push("/admin/users");
+                      }}
+                    >
+                      Users
+                    </DropdownMenuLabel>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <DropdownMenuLabel
+                      className="cursor-pointer"
+                      onClick={() => {
+                        router.push("/admin/transactions");
+                      }}
+                    >
+                      Transactions
+                    </DropdownMenuLabel>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <DropdownMenuLabel
+                      className="cursor-pointer"
+                      onClick={() => {
+                        router.push("/admin/create-requests");
+                      }}
+                    >
+                      Create Requests
+                    </DropdownMenuLabel>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <DropdownMenuLabel
+                      className="cursor-pointer"
+                      onClick={() => {
+                        router.push("/admin/delete-requests");
+                      }}
+                    >
+                      Delete Requests
+                    </DropdownMenuLabel>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-gray-400 w-[90%]" />
+                  <DropdownMenuItem>
+                    <DropdownMenuLabel
+                      className="cursor-pointer"
+                      onClick={() => {
+                        setUser(null);
+                        router.push("/");
+                      }}
+                    >
+                      Logout
+                    </DropdownMenuLabel>
+                    <DropdownMenuShortcut>
+                      <LogOut className="stroke-black" />
+                    </DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              ) : (
+                <DropdownMenuContent sideOffset={4}>
+                  <DropdownMenuItem>
+                    <DropdownMenuLabel className="cursor-pointer">
+                      Profile
+                    </DropdownMenuLabel>
+                    <DropdownMenuShortcut>
+                      <User className="stroke-black" />
+                    </DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <DropdownMenuLabel className="cursor-pointer">
+                      WithDraw
+                    </DropdownMenuLabel>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <DropdownMenuLabel className="cursor-pointer">
+                      Deposit
+                    </DropdownMenuLabel>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <DropdownMenuLabel className="cursor-pointer">
+                      Transfer
+                    </DropdownMenuLabel>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <DropdownMenuLabel className="cursor-pointer">
+                      Transaction
+                    </DropdownMenuLabel>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-gray-400 w-[90%]" />
+                  <DropdownMenuItem>
+                    <DropdownMenuLabel
+                      className="cursor-pointer"
+                      onClick={() => {
+                        setUser(null);
+                        router.push("/");
+                      }}
+                    >
+                      Logout
+                    </DropdownMenuLabel>
+                    <DropdownMenuShortcut>
+                      <LogOut className="stroke-black" />
+                    </DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              )
             ) : (
               <DropdownMenuContent sideOffset={4}>
                 <DropdownMenuItem>

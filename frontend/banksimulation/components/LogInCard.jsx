@@ -19,18 +19,18 @@ const LogInCard = () => {
     const res = await axios.post(
       `http://localhost:8080/login/${obj.phone}/${obj.password}`
     );
-    console.log(res);
+    // console.log(res);
     if (res.data == "") {
       setInvalidPassword(true);
       return;
     }
     const user = {
       accNo: res.data.accNo,
-      name: res.data.name,
-      phone: res.data.phone,
       balance: res.data.balance,
-      password: res.data.password,
-      pin: res.data.pin,
+      name: `${res.data.name}`,
+      passWord: `${res.data.passWord}`,
+      phno: res.data.phno,
+      pin: `${res.data.pin}`,
       isAdmin: false,
     };
 
@@ -38,7 +38,8 @@ const LogInCard = () => {
       user.isAdmin = true;
     }
     setUser(user);
-    router.push("/");
+    const route = user.isAdmin ? "admin" : `user/${user.accNo}`;
+    router.push(route);
   };
 
   const onSubmit = (data) => {
