@@ -117,7 +117,7 @@ public class BankServiceImplementation implements BankService {
     }
 
     @Override
-    public List<Object[]> getAllCreateRequests() {
+    public List<RequestCreate> getAllCreateRequests() {
         return rcRepository.getAllRequests();
     }
 
@@ -127,13 +127,15 @@ public class BankServiceImplementation implements BankService {
     }
 
     @Override
-    public boolean insertAcceptedUser(String name, long phoneNo, String passWord, long initialAmount, String PIN) {
+    public boolean insertAcceptedUser(String name, long phoneNo, String passWord, long initialAmount, String PIN,
+            String date) {
         User user = new User();
         user.setName(name);
         user.setPhoneNo(phoneNo);
         user.setPassWord(passWord);
         user.setBalance(initialAmount);
         user.setPIN(PIN);
+        user.setDate(date);
         userRepository.save(user);
         return true;
     }

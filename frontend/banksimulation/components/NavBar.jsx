@@ -28,6 +28,8 @@ const NavBar = () => {
     isAdmin = user.isAdmin;
   }
 
+  const profile = user && (user?.isAdmin ? "admin" : `user/${user.accNo}`);
+
   return (
     routeName != "/login" &&
     routeName != "/signin" && (
@@ -83,7 +85,7 @@ const NavBar = () => {
                 <div className="lg:hidden"></div>
               </div>
             ) : (
-              <div className="flex justify-center align-middle gap-4 p-2.5 lg:gap-10 max-lg:text-sm font-semibold max-md:hidden">
+              <div className="flex justify-center align-middle gap-4 p-2.5 lg:gap-10 max-lg:text-sm font-semibold max-lg:hidden">
                 <div className="hover:cursor-pointer">Withdraw</div>
                 <div className="hover:cursor-pointer">Deposit</div>
                 <div className="hover:cursor-pointer">Transfer</div>
@@ -98,13 +100,27 @@ const NavBar = () => {
           ) : null}
         </div>
         {user ? (
-          <div className="hidden sm:hidden md:hidden lg:block flex gap-8 max-lg:text-sm">
+          <div className=" max-lg:hidden lg:block flex gap-8 max-lg:text-sm">
             {!isAdmin && (
-              <div className="hover:cursor-pointer font-semibold mt-2.5">
-                Profile
+              <div className="flex gap-8">
+                <div
+                  className="hover:cursor-pointer font-semibold mt-2.5"
+                  onClick={() => router.push(profile)}
+                >
+                  Profile
+                </div>
+                <div
+                  className="font-semibold rounded-xl  border-gray-900 border mt-1.5 px-3 py-1 hover:cursor-pointer"
+                  onClick={() => {
+                    setUser(null);
+                    router.push("/");
+                  }}
+                >
+                  Logout
+                </div>
               </div>
             )}
-            <div>
+            {isAdmin && (
               <div
                 className="font-semibold rounded-xl  border-gray-900 border mt-1.5 px-3 py-1 hover:cursor-pointer"
                 onClick={() => {
@@ -114,7 +130,7 @@ const NavBar = () => {
               >
                 Logout
               </div>
-            </div>
+            )}
           </div>
         ) : (
           <div>
@@ -203,7 +219,10 @@ const NavBar = () => {
               ) : (
                 <DropdownMenuContent sideOffset={4}>
                   <DropdownMenuItem>
-                    <DropdownMenuLabel className="cursor-pointer">
+                    <DropdownMenuLabel
+                      className="cursor-pointer"
+                      onClick={() => router.push(profile)}
+                    >
                       Profile
                     </DropdownMenuLabel>
                     <DropdownMenuShortcut>
@@ -226,7 +245,10 @@ const NavBar = () => {
                     </DropdownMenuLabel>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <DropdownMenuLabel className="cursor-pointer">
+                    <DropdownMenuLabel
+                      className="cursor-pointer"
+                      onClick={() => router.push("/transactions")}
+                    >
                       Transaction
                     </DropdownMenuLabel>
                   </DropdownMenuItem>

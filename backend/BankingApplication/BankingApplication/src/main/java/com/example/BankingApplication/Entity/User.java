@@ -17,6 +17,7 @@ public class User {
     private String passWord;
     private long balance;
     private String PIN;
+    private String date;
 
     public User() {
 
@@ -51,6 +52,7 @@ public class User {
                 ", phno=" + phno +
                 ", passWord='" + passWord + '\'' +
                 ", balance=" + balance +
+                ",Date='" + date + "'" +
                 '}';
     }
 

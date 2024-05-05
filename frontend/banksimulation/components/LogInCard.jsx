@@ -38,8 +38,8 @@ const LogInCard = () => {
       user.isAdmin = true;
     }
     setUser(user);
-    const route = user.isAdmin ? "admin" : `user/${user.accNo}`;
-    router.push(route);
+    // const route = user.isAdmin ? "admin" : `user/${user.accNo}`;
+    router.push("/");
   };
 
   const onSubmit = (data) => {

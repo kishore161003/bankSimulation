@@ -25,7 +25,7 @@ public interface BankService {
 
     String deleteAccount(Long accno);
 
-    List<Object[]> getAllCreateRequests();
+    List<RequestCreate> getAllCreateRequests();
 
     List<Object[]> getAllDeleteRequests();
 
@@ -39,7 +39,7 @@ public interface BankService {
 
     List<Transaction> getAllTransactions();
 
-    boolean insertAcceptedUser(String name, long phoneNo, String passWord, long initialAmount, String PIN);
+    boolean insertAcceptedUser(String name, long phoneNo, String passWord, long initialAmount, String PIN, String date);
 
     boolean updateFields(long userId, String name, String password, String PIN);
 

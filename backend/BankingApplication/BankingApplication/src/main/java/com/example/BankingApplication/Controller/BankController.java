@@ -52,7 +52,7 @@ public class BankController {
         if (status.equals("Accepted")) {
             RequestCreate request = bankService.getCreateRequest(phone);
             inserted = bankService.insertAcceptedUser(request.getName(), request.getPhoneNo(), request.getPassWord(),
-                    request.getInitialAmount(), request.getPIN());
+                    request.getInitialAmount(), request.getPIN(), request.getDate());
 
             bankService.deleteCreateRequest(request.getId());
             if (inserted) {
@@ -82,6 +82,7 @@ public class BankController {
 
     @GetMapping("/createRequests")
     public ResponseEntity<Object> getAllCreateRequests() {
+        System.out.println(bankService.getAllCreateRequests());
         return ResponseEntity.ok(bankService.getAllCreateRequests());
     }
 

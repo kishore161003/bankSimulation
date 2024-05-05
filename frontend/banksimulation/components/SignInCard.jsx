@@ -12,6 +12,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { X } from "lucide-react";
+
 import axios from "axios";
 
 const SignInCard = () => {
@@ -26,9 +27,13 @@ const SignInCard = () => {
   } = useForm();
 
   const createRequest = async (obj) => {
-    const res = await axios.post("http://localhost:8080/createRequest", obj);
-    console.log(res);
-    setDialogOpen(true);
+    try {
+      const res = await axios.post("http://localhost:8080/createRequest", obj);
+      console.log(res);
+      setDialogOpen(true);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const onSubmit = (data) => {
@@ -42,6 +47,7 @@ const SignInCard = () => {
       initialAmount: data.amount,
       pin: data.pin,
       passWord: data.password,
+      date: new Date().toLocaleDateString(),
     };
 
     createRequest(obj);
@@ -171,7 +177,7 @@ const SignInCard = () => {
               <div className="flex justify-center items-center">
                 <DialogDescription className="text-center w-80 font-semibold ">
                   Your account creation Request has been sent to the bank. You
-                  will be able to login once your account is created !!!.
+                  can able to login once your account is created !!!.
                 </DialogDescription>
               </div>
             </DialogContent>
