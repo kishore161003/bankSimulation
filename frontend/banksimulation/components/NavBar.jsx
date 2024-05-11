@@ -86,9 +86,24 @@ const NavBar = () => {
               </div>
             ) : (
               <div className="flex justify-center align-middle gap-4 p-2.5 lg:gap-10 max-lg:text-sm font-semibold max-lg:hidden">
-                <div className="hover:cursor-pointer">Withdraw</div>
-                <div className="hover:cursor-pointer">Deposit</div>
-                <div className="hover:cursor-pointer">Transfer</div>
+                <div
+                  className="hover:cursor-pointer"
+                  onClick={() => router.push("/withdraw")}
+                >
+                  Withdraw
+                </div>
+                <div
+                  className="hover:cursor-pointer"
+                  onClick={() => router.push("/deposit")}
+                >
+                  Deposit
+                </div>
+                <div
+                  className="hover:cursor-pointer"
+                  onClick={() => router.push("/transfer")}
+                >
+                  Transfer
+                </div>
                 <div
                   className="hover:cursor-pointer"
                   onClick={() => router.push("/transactions")}
@@ -134,12 +149,12 @@ const NavBar = () => {
           </div>
         ) : (
           <div>
-            <div
+            <button
               className="font-semibold rounded-xl max-md:hidden  border-gray-900 border mt-1.5 px-4 py-1 hover:cursor-pointer"
               onClick={() => router.push("/login")}
             >
               Login
-            </div>
+            </button>
           </div>
         )}
         <div className="lg:hidden">

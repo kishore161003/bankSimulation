@@ -1,10 +1,57 @@
-"use client";
-import React from "react";
+import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 
-const admin = () => {
+export default function BentoGridDemo() {
   return (
-    <div className="flex justify-center items-center">Admin Dashboard</div>
+    <BentoGrid>
+      {items.map((item, i) => (
+        <BentoGridItem
+          key={i}
+          header={item.header}
+          icon={item.icon}
+          title={item.title}
+          description={item.description}
+          className={i == 1 || i == 2 || i == 5 ? "md:col-span-2" : ""}
+        />
+      ))}
+    </BentoGrid>
   );
-};
+}
 
-export default admin;
+const items = [
+  {
+    header: "header",
+    icon: "icon",
+    title: "title",
+    description: "description",
+  },
+  {
+    header: "header",
+    icon: "icon",
+    title: "title",
+    description: "description",
+  },
+  {
+    header: "header",
+    icon: "icon",
+    title: "title",
+    description: "description",
+  },
+  {
+    header: "header",
+    icon: "icon",
+    title: "title",
+    description: "description",
+  },
+  {
+    header: "header",
+    icon: "icon",
+    title: "title",
+    description: "description",
+  },
+  {
+    header: "header",
+    icon: "icon",
+    title: "title",
+    description: "description",
+  },
+];
